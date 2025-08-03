@@ -1,0 +1,59 @@
+Using useState Hook
+import { useState } from "react";
+import "./AddTodoItem.css";
+import PropTypes from "prop-types";
+import { BiMessageAdd } from "react-icons/bi";
+export default function AddTodoItem({ onHandleItem }) {
+  let [todoName, setTodoName] = useState("");
+  let [dueDate, setDueDate] = useState("");
+  const handleNameChange = (event) => {
+    setTodoName(event.target.value);
+  };
+  const handleDueDateChange = (event) => {
+    setDueDate(event.target.value);
+  };
+  const handleButtonClicked = (event) => {
+    console.log(event);
+    //We use prevent default to prevent data sending to server by default..
+    event.preventDefault();
+    onHandleItem(todoName, dueDate);
+    setDueDate("");
+    setTodoName("");
+  };
+  return (
+    <div>
+      <div className="container ">
+        <form className="row kg-row" onSubmit={handleButtonClicked}>
+          <div className="col-6">
+            <input
+              type="text"
+              value={todoName}
+              placeholder="Enter Todo Here"
+              onChange={handleNameChange}
+            ></input>
+          </div>
+          <div className="col-4">
+            <input
+              type="date"
+              value={dueDate}
+              // this is called two way binding mtlb data jb bhej rhy wo using states sbhi mei sy pass hota ja rha to 
+              onChange={handleDueDateChange}
+            ></input>
+          </div>
+          <div className="col-2">
+            <button
+              type="submit"
+              value={dueDate} // this is called two way binding mtlb data jb bhej rhy wo using states sbhi mei sy pass hota ja rha to 
+              className="btn btn-success kg-button"
+            >
+              <BiMessageAdd />
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+AddTodoItem.propTypes = {
+  onHandleItem: PropTypes.func.isRequired,
+};
